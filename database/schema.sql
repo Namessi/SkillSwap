@@ -51,8 +51,6 @@ CREATE TABLE IF NOT EXISTS role_permissions (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Association des permissions aux rôles';
 
 
-
-
 -- Table 4 : utilisateurs
 -- Cette table contient les informations des comptes utilisateurs de l'application.
 
@@ -73,8 +71,6 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Informations des utilisateurs de l\'application';
 
 
-
-
 -- Table 5 : parametres
 -- Contient des paires clé/valeur définies par les utilisateurs (préférences personnalisées)
 
@@ -88,8 +84,6 @@ CREATE TABLE IF NOT EXISTS parametres (
   CONSTRAINT fk_parametres_utilisateur FOREIGN KEY (utilisateur_id)
     REFERENCES utilisateurs(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Paramètres personnalisés des utilisateurs';
-
-
 
 
 -- Table 6 : abonnements
@@ -109,9 +103,27 @@ CREATE TABLE IF NOT EXISTS abonnements (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Historique des abonnements des utilisateurs';
 
 
+-- Table 7 : traductions
+-- Stocke les traductions des éléments de l'application dans plusieurs langues
+
+CREATE TABLE IF NOT EXISTS traductions (
+  id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique de la traduction',
+  cle VARCHAR(100) NOT NULL UNIQUE COMMENT 'Clé de l’élément à traduire (ex : "profil.titre")',
+  fr TEXT COMMENT 'Traduction en français',
+  en TEXT COMMENT 'Traduction en anglais',
+  es TEXT COMMENT 'Traduction en espagnol',
+  it TEXT COMMENT 'Traduction en italien',
+  de TEXT COMMENT 'Traduction en allemand',
+  zh TEXT COMMENT 'Traduction en chinois',
+  ja TEXT COMMENT 'Traduction en japonais',
+  pl TEXT COMMENT 'Traduction en polonais',
+  ru TEXT COMMENT 'Traduction en russe',
+  ko TEXT COMMENT 'Traduction en coréen',
+  ar TEXT COMMENT 'Traduction en arabe'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Table des traductions multilingues';
 
 
--- Table 7 : competences
+-- Table 8 : competences
 -- Liste des compétences que les utilisateurs peuvent proposer ou maîtriser dans l'application.
 
 CREATE TABLE IF NOT EXISTS competences (
@@ -129,9 +141,7 @@ CREATE TABLE IF NOT EXISTS competences (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Liste des compétences proposées dans l\'application';
 
 
-
-
--- Table 8 : utilisateur_competences
+-- Table 9 : utilisateur_competences
 -- Association des compétences à chaque utilisateur, avec un niveau de maîtrise.
 
 CREATE TABLE IF NOT EXISTS utilisateur_competences (
@@ -153,9 +163,7 @@ CREATE TABLE IF NOT EXISTS utilisateur_competences (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Compétences maîtrisées par chaque utilisateur';
 
 
-
-
--- Table 9 : favoris
+-- Table 10 : favoris
 -- Permet à un utilisateur de marquer un autre utilisateur comme favori.
 
 CREATE TABLE IF NOT EXISTS favoris (
@@ -176,9 +184,7 @@ CREATE TABLE IF NOT EXISTS favoris (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Liste des utilisateurs favoris';
 
 
-
-
--- Table 10 : messages
+-- Table 11 : messages
 -- Stocke les messages envoyés entre utilisateurs dans l'application.
 
 CREATE TABLE IF NOT EXISTS messages (
@@ -200,8 +206,7 @@ CREATE TABLE IF NOT EXISTS messages (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Messages échangés entre utilisateurs';
 
 
-
--- Table 11 : notifications
+-- Table 12 : notifications
 -- Table des notifications envoyées aux utilisateurs
 
 CREATE TABLE IF NOT EXISTS notifications (
@@ -221,7 +226,7 @@ CREATE TABLE IF NOT EXISTS notifications (
 
 
 
--- Table 12 : quizz
+-- Table 13 : quizz
 -- Table des quizz disponibles sur la plateforme
 
 CREATE TABLE IF NOT EXISTS quizz (
@@ -238,7 +243,7 @@ CREATE TABLE IF NOT EXISTS quizz (
 
 
 
--- Table 13 : tentatives_quizz
+-- Table 14 : tentatives_quizz
 -- Gère les tentatives effectuées par un utilisateur sur un quizz donné.
 
 CREATE TABLE IF NOT EXISTS tentatives_quizz (
@@ -258,9 +263,7 @@ CREATE TABLE IF NOT EXISTS tentatives_quizz (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Suivi des tentatives des utilisateurs pour chaque quizz';
 
 
-
-
--- Table 14 : resultats_quizz
+-- Table 15 : resultats_quizz
 -- Stocke les résultats des utilisateurs à chaque quizz.
 
 CREATE TABLE IF NOT EXISTS resultats_quizz (
@@ -276,9 +279,7 @@ CREATE TABLE IF NOT EXISTS resultats_quizz (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Résultats des utilisateurs pour chaque quizz';
 
 
-
-
--- Table 15 : signalements
+-- Table 16 : signalements
 -- Enregistre les signalements effectués par les utilisateurs (ex : message inapproprié, utilisateur, etc.)
 
 CREATE TABLE IF NOT EXISTS signalements (
@@ -297,8 +298,7 @@ CREATE TABLE IF NOT EXISTS signalements (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Signalements faits par les utilisateurs';
 
 
-
--- Table 16 : support
+-- Table 17 : support
 -- Permet aux utilisateurs de soumettre des tickets d'assistance à l'équipe de support.
 
 CREATE TABLE IF NOT EXISTS support (
@@ -316,9 +316,7 @@ CREATE TABLE IF NOT EXISTS support (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Tickets de support envoyés par les utilisateurs';
 
 
-
-
--- Table 17 : tutoriels
+-- Table 18 : tutoriels
 -- Contient des tutoriels vidéos, écrits ou autres créés par les utilisateurs.
 
 CREATE TABLE IF NOT EXISTS tutoriels (
@@ -338,9 +336,7 @@ CREATE TABLE IF NOT EXISTS tutoriels (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Tutoriels créés par les utilisateurs';
 
 
-
-
--- Table 18 : tableau_de_bord
+-- Table 19 : tableau_de_bord
 -- Contient les préférences et données personnalisées d'affichage pour chaque utilisateur (widgets, stats, etc.)
 
 CREATE TABLE IF NOT EXISTS tableau_de_bord (
@@ -357,9 +353,7 @@ CREATE TABLE IF NOT EXISTS tableau_de_bord (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Tableau de bord personnalisé pour chaque utilisateur';
 
 
-
-
--- Table 19 : localisations
+-- Table 20 : localisations
 -- Stocke la position géographique et les préférences de recherche de chaque utilisateur.
 
 CREATE TABLE IF NOT EXISTS localisations (
@@ -377,9 +371,7 @@ CREATE TABLE IF NOT EXISTS localisations (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Positions et préférences de localisation des utilisateurs';
 
 
-
-
--- Table 20 : matchs
+-- Table 21 : matchs
 -- Enregistre les interactions "like" et "superlike" entre utilisateurs, et s'ils ont matché ou non.
 
 CREATE TABLE IF NOT EXISTS matchs (
@@ -398,8 +390,7 @@ CREATE TABLE IF NOT EXISTS matchs (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Historique des likes et matchs entre utilisateurs';
 
 
-
--- Table 21 : crossings
+-- Table 22 : crossings
 -- Enregistre les croisements physiques entre deux utilisateurs (façon Happn), avec la distance et l’horodatage.
 CREATE TABLE IF NOT EXISTS crossings (
   id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique du croisement',
@@ -415,8 +406,7 @@ CREATE TABLE IF NOT EXISTS crossings (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Historique des croisements entre utilisateurs';
 
 
-
--- Table 22 : blocages
+-- Table 23 : blocages
 -- Permet à un utilisateur d’en bloquer un autre, pour éviter toute interaction.
 
 CREATE TABLE IF NOT EXISTS blocages (
@@ -436,8 +426,7 @@ CREATE TABLE IF NOT EXISTS blocages (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Blocages entre utilisateurs pour empêcher les interactions';
 
 
-
--- Table 23 : disponibilites
+-- Table 24 : disponibilites
 -- Représente les créneaux de disponibilité d’un utilisateur par jour.
 
 CREATE TABLE IF NOT EXISTS disponibilites (
@@ -453,8 +442,7 @@ CREATE TABLE IF NOT EXISTS disponibilites (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Disponibilités hebdomadaires des utilisateurs';
 
 
-
--- Table 24 : suggestions_hebdo
+-- Table 25 : suggestions_hebdo
 -- Représente les suggestions d’utilisateurs proposées chaque semaine à un utilisateur donné.
 
 CREATE TABLE IF NOT EXISTS suggestions_hebdo (

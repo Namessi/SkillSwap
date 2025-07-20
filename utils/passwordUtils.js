@@ -1,5 +1,7 @@
+// Importation du module bcrypt pour le hachage et la comparaison de mots de passe
 const bcrypt = require('bcrypt');
 
+// Définition du nombre de tours de salage (plus le nombre est élevé, plus le hash est sécurisé mais lent)
 const SALT_ROUNDS = 10;
 
 /**
@@ -21,6 +23,7 @@ const comparePassword = async (plainPassword, hashedPassword) => {
   return await bcrypt.compare(plainPassword, hashedPassword);
 };
 
+// Exportation des fonctions pour les utiliser ailleurs dans l’application (ex : inscription / connexion)
 module.exports = {
   hashPassword,
   comparePassword,

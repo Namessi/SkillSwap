@@ -1,6 +1,7 @@
 // models/auth.model.js
 
-const db = require('../database/dbConnection');
+const initDBConnection = require('../database/dbConnection');
+const db = initDBConnection(); // ✅ Connexion réutilisée 
 
 const Auth = {
   /**

@@ -1,4 +1,5 @@
-const db = require('../database/dbConnection');
+const initDBConnection = require('../database/dbConnection');
+const db = initDBConnection(); // ✅ Connexion réutilisée 
 
 // Ajouter un like ou superlike
 exports.envoyerLike = (data, callback) => {
@@ -65,4 +66,19 @@ exports.getHistoriqueMatchs = (utilisateur_id, callback) => {
         ORDER BY m.date_like DESC
     `;
     db.query(sql, [utilisateur_id, utilisateur_id, utilisateur_id], callback);
+};
+
+// Découverte aléatoire : renvoie un profil au hasard que l'utilisateur n’a pas encore liké
+exports.decouverteAleatoire = (utilisateur_id, callback) => {
+    const sql = `
+        SELECT u.id, u.nom, u.prenom, u.photo_profil, u.bio
+        FROM utilisateurs u
+        WHERE u.id != ?
+          AND u.id NOT IN (
+              SELECT utilisateur_2 FROM matchs WHERE utilisateur_1 = ?
+          )
+        ORDER BY RAND()
+        LIMIT 1
+    `;
+    db.query(sql, [utilisateur_id, utilisateur_id], callback);
 };

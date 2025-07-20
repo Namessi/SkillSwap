@@ -1,4 +1,5 @@
-const db = require('../database/dbConnection');
+const initDBConnection = require('../database/dbConnection');
+const db = initDBConnection(); // ✅ Connexion réutilisée 
 
 // Enregistrer une suggestion
 exports.ajouterSuggestion = (utilisateur_id, suggestion_id, callback) => {

@@ -1,4 +1,5 @@
-const db = require('../database/dbconnection');
+const initDBConnection = require('../database/dbConnection');
+const db = initDBConnection(); // ✅ Connexion réutilisée 
 
 const Tutoriels = {
   // Récupérer tous les tutoriels

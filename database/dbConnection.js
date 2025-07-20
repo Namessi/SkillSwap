@@ -1,22 +1,34 @@
+// database/dbconnection.js
+
 const mysql = require('mysql2');
-require('dotenv').config(); // Chargement des variables d’environnement
+require('dotenv').config(); // 🔄 Charge les variables d’environnement
 
-// Création de la connexion à la base de données
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,           // Adresse du serveur MySQL
-  user: process.env.DB_USER,           // Nom d'utilisateur
-  password: process.env.DB_PASSWORD,   // Mot de passe
-  database: process.env.DB_NAME        // Nom de la base
-});
+let db = null;
 
-// Vérification de la connexion
-db.connect((err) => {
-  if (err) {
-    console.error('❌ Erreur de connexion à MySQL :', err.message);
-    process.exit(1); // Arrêt du processus
+/**
+ * Initialise une seule fois la connexion à la base de données MySQL
+ * et la réutilise partout dans l’application
+ */
+function initDBConnection() {
+  if (!db) {
+    db = mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+    });
+
+    db.connect((err) => {
+      if (err) {
+        console.error('❌ Erreur de connexion à MySQL :', err.message);
+        process.exit(1);
+      }
+      console.log('✅ Connexion à MySQL réussie');
+    });
   }
-  console.log('✅ Connexion à MySQL réussie');
-});
 
-// Exportation de la connexion
-module.exports = db;
+  return db;
+}
+
+// ✅ On exporte bien la fonction elle-même, pas son résultat
+module.exports = initDBConnection;

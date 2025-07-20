@@ -1,4 +1,5 @@
-const db = require('../database/dbConnection');
+const initDBConnection = require('../database/dbConnection');
+const db = initDBConnection(); // ✅ Connexion réutilisée 
 
 // Vérifie les utilisateurs dans le rayon < seuil
 exports.detecterCroisements = (id, latitude, longitude, seuil_m, callback) => {

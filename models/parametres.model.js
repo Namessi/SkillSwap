@@ -1,6 +1,7 @@
 // models/parametres.model.js
 
-const db = require('../database/dbconnection');
+const initDBConnection = require('../database/dbConnection');
+const db = initDBConnection(); // ✅ Connexion réutilisée 
 
 const Parametres = {
   /**
