@@ -321,7 +321,7 @@ CREATE TABLE IF NOT EXISTS support (
 
 CREATE TABLE IF NOT EXISTS tutoriels (
   id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique du tutoriel',
-  utilisateur_id INT COMMENT 'Auteur du tutoriel (peut être NULL si supprimé)',
+  utilisateur_id INT UNSIGNED COMMENT 'Auteur du tutoriel (peut être NULL si supprimé)',
   titre VARCHAR(255) NOT NULL COMMENT 'Titre du tutoriel',
   description TEXT COMMENT 'Description ou résumé',
   url_video VARCHAR(500) COMMENT 'Lien vers la vidéo (YouTube, Vimeo, etc.)',
@@ -330,7 +330,7 @@ CREATE TABLE IF NOT EXISTS tutoriels (
   date_creation DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Date de création',
   date_maj DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Dernière mise à jour',
 
-  -- Clé étrangère
+  -- Clé étrangère corrigée (type UNSIGNED)
   CONSTRAINT fk_tutoriels_utilisateur FOREIGN KEY (utilisateur_id)
     REFERENCES utilisateurs(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Tutoriels créés par les utilisateurs';
@@ -392,6 +392,7 @@ CREATE TABLE IF NOT EXISTS matchs (
 
 -- Table 22 : crossings
 -- Enregistre les croisements physiques entre deux utilisateurs (façon Happn), avec la distance et l’horodatage.
+
 CREATE TABLE IF NOT EXISTS crossings (
   id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique du croisement',
   utilisateur_a INT UNSIGNED NOT NULL COMMENT 'Premier utilisateur impliqué dans le croisement',
@@ -449,7 +450,7 @@ CREATE TABLE IF NOT EXISTS suggestions_hebdo (
   id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Identifiant unique de la suggestion hebdomadaire',
   utilisateur_id INT UNSIGNED NOT NULL COMMENT 'Utilisateur qui reçoit la suggestion',
   suggestion_id INT UNSIGNED NOT NULL COMMENT 'Utilisateur suggéré (profil recommandé)',
-  date_suggestion DATE DEFAULT CURRENT_DATE COMMENT 'Date de la suggestion (par défaut aujourd’hui)',
+  date_suggestion DATE COMMENT 'Date de la suggestion (à renseigner via l\'application ou SQL)',
 
   -- Clés étrangères
   CONSTRAINT fk_suggestions_hebdo_utilisateur FOREIGN KEY (utilisateur_id)
@@ -460,7 +461,3 @@ CREATE TABLE IF NOT EXISTS suggestions_hebdo (
   -- Évite les doublons pour un même jour
   UNIQUE KEY uq_suggestion_jour (utilisateur_id, suggestion_id, date_suggestion)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Suggestions d’utilisateurs affichées chaque semaine';
-
-
-
-
