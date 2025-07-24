@@ -183,10 +183,6 @@ README.md
 - Notifications, favoris et abonnements
 - Paramètres utilisateur (visibilité, langue, thème, horaires...)
 - Statistiques dans le tableau de bord admin
-- Rechargement de compte (topups)
-- Envoi de fonds (transfers)
-- QRCode utilisateur
-- Destinataires enregistrés
 - Récompenses / badges (rewards)
 - Défis et challenges
 - Actualités & mises à jour
@@ -257,7 +253,6 @@ Toutes les routes répertoriées ci-dessus seront testées avec Postman, incluan
 - Paramètres utilisateur
 - Blocages, disponibilités, visibilité
 - Localisation, croisements, carte interactive
-- Transfers, recharges, QR Code
 - Récompenses, défis, actualités
 - Modules récents : agenda, boutique, duelQuizz, gamification, push, traduction
 
